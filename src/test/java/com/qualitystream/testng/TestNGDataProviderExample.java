@@ -25,7 +25,7 @@ public class TestNGDataProviderExample {
 
   @BeforeClass
   public void beforeClass() {
-    System.setProperty("webdriver.chrome.driver", "src/main/resources/chromedriver/chromedriver");
+    System.setProperty("webdriver.chrome.driver", "/usr/local/bin/chromedriver");
     driver = new ChromeDriver();
     driver.manage().window().maximize();
     driver.get("http://automationpractice.com/index.php");
