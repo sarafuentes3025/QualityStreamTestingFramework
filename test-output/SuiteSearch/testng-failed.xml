@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE suite SYSTEM "https://testng.org/testng-1.0.dtd">
+<suite name="Failed suite [SuiteSearch]" guice-stage="DEVELOPMENT">
+  <test thread-count="5" name="Search Blouses(failed)">
+    <classes>
+      <class name="com.reportsExample.qs.SearchBlouses">
+        <methods>
+          <include name="beforeClass"/>
+          <include name="afterClass"/>
+          <include name="search_Blouses"/>
+        </methods>
+      </class> <!-- com.reportsExample.qs.SearchBlouses -->
+    </classes>
+  </test> <!-- Search Blouses(failed) -->
+</suite> <!-- Failed suite [SuiteSearch] -->
