@@ -12,7 +12,7 @@ import org.testng.annotations.Test;
 
 import static org.assertj.core.api.AssertionsForClassTypes.assertThat;
 
-public class SearchBlouses {
+public class SearchChiffonDresses {
 
   WebDriver driver;
   By searchBoxLocator = By.id("search_query_top");
@@ -27,10 +27,10 @@ public class SearchBlouses {
   }
 
   @Test
-  public void search_Blouses() {
+  public void search_ChiffonDresses() {
     WebElement searchBox = driver.findElement(searchBoxLocator);
     searchBox.clear();
-    searchBox.sendKeys("blouse");
+    searchBox.sendKeys("chiffon dresses");
     searchBox.submit();
 
     WebDriverWait wait = new WebDriverWait(driver, 7);
@@ -38,7 +38,7 @@ public class SearchBlouses {
 
     System.out.println("This is the result number:" + driver.findElement(resultsLocator).getText());
 
-    assertThat(driver.findElement(resultsLocator).getText()).isEqualTo("10 result has been found.");
+    assertThat(driver.findElement(resultsLocator).getText()).isEqualTo("2 results have been found.");
   }
 
   @AfterClass
