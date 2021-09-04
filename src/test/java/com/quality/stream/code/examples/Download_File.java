@@ -38,7 +38,7 @@ public class Download_File {
   @Test
   public void testName() throws InterruptedException {
     driver.get("https://the-internet.herokuapp.com/download");
-    driver.findElement(By.cssSelector("#content > div > a:nth-child(58)")).click();
+    driver.findElement(By.cssSelector("#content > div > a:nth-child(4)")).click();
     Thread.sleep(2_000);
 
     File folder = new File(downloadFilePath);
