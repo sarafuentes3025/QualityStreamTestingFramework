@@ -1,6 +1,59 @@
 package com.screenshot.example;
 
-public abstract class ScreenShotTest {
+import org.junit.jupiter.api.AfterAll;
+import org.junit.jupiter.api.BeforeAll;
+import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.extension.ExtendWith;
+import org.junit.jupiter.api.extension.ExtensionContext;
+import org.junit.jupiter.api.extension.TestWatcher;
+import org.openqa.selenium.OutputType;
+import org.openqa.selenium.TakesScreenshot;
+import org.openqa.selenium.WebDriver;
+import org.openqa.selenium.chrome.ChromeDriver;
 
+import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.Paths;
+import java.nio.file.StandardCopyOption;
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 
+import static org.assertj.core.api.Assertions.assertThat;
+
+@ExtendWith(ScreenShotTest.ScreenshotIfFails.class)
+public class ScreenShotTest {
+
+  private static WebDriver driver;
+
+  @BeforeAll
+  public static void setUp() {
+    System.setProperty("webdriver.chrome.driver", "/usr/local/bin/chromedriver");
+    driver = new ChromeDriver();
+  }
+
+  @Test
+  void googleSearchTest() {
+    driver.get("https://www.google.com/");
+    assertThat(driver.getTitle()).isEqualTo("Google!");
+  }
+
+  @AfterAll
+  public static void tearDown() {
+    driver.quit();
+  }
+
+  static class ScreenshotIfFails implements TestWatcher {
+    @Override
+    public void testFailed(ExtensionContext context, Throwable throwable) {
+      var screenshotFile = ((TakesScreenshot) driver).getScreenshotAs(OutputType.FILE);
+      var timestamp = LocalDateTime.now().format(DateTimeFormatter.ofPattern("dd_MM_yyyy_hh_mm_ss"));
+      try {
+        Files.copy(screenshotFile.toPath(),
+            Paths.get("%s_error_en_%s.png".formatted(timestamp, context.getTestMethod())),
+            StandardCopyOption.REPLACE_EXISTING);
+      } catch (IOException e) {
+        e.printStackTrace();
+      }
+    }
+  }
 }
