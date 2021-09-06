@@ -1,5 +1,6 @@
 package com.screenshot.example;
 
+import com.checkingLinks.test.CheckingLinksPage;
 import org.junit.jupiter.api.AfterAll;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
@@ -19,11 +20,13 @@ import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 
 import static org.assertj.core.api.Assertions.assertThat;
+import static org.testng.Assert.assertTrue;
 
 @ExtendWith(ScreenShotTest.ScreenshotIfFails.class)
 public class ScreenShotTest {
 
   private static WebDriver driver;
+  private static CheckingLinksPage page;
 
   @BeforeAll
   public static void setUp() {
@@ -37,6 +40,13 @@ public class ScreenShotTest {
     assertThat(driver.getTitle()).isEqualTo("Google!");
   }
 
+  @Test
+  public void testName() {
+    page = new CheckingLinksPage(driver);
+    driver.get("http://demo.guru99.com/test/newtours/index.php");
+    assertTrue(page.checkingPageLinks(), "There are broken links");
+  }
+
   @AfterAll
   public static void tearDown() {
     driver.quit();
@@ -46,7 +56,7 @@ public class ScreenShotTest {
     @Override
     public void testFailed(ExtensionContext context, Throwable throwable) {
       var screenshotFile = ((TakesScreenshot) driver).getScreenshotAs(OutputType.FILE);
-      var timestamp = LocalDateTime.now().format(DateTimeFormatter.ofPattern("dd_MM_yyyy_hh_mm_ss"));
+      var timestamp = LocalDateTime.now().format(DateTimeFormatter.ofPattern("dd_MM_yyyy_hh"));
       try {
         Files.copy(screenshotFile.toPath(),
             Paths.get("%s_error_en_%s.png".formatted(timestamp, context.getTestMethod())),
