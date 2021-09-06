@@ -26,7 +26,6 @@ import static org.testng.Assert.assertTrue;
 public class ScreenShotTest {
 
   private static WebDriver driver;
-  private static CheckingLinksPage page;
 
   @BeforeAll
   public static void setUp() {
@@ -42,7 +41,7 @@ public class ScreenShotTest {
 
   @Test
   public void testName() {
-    page = new CheckingLinksPage(driver);
+    CheckingLinksPage page = new CheckingLinksPage(driver);
     driver.get("http://demo.guru99.com/test/newtours/index.php");
     assertTrue(page.checkingPageLinks(), "There are broken links");
   }
