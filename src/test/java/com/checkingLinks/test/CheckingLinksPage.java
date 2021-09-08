@@ -58,8 +58,7 @@ public class CheckingLinksPage {
         System.out.println(brokenLink);
       }
       return false;
-    } else {
+    } else
       return true;
-    }
   }
 }
